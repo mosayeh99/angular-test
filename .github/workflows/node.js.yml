@@ -1,0 +1,28 @@
+name: Deploy Angular Project to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Deploy to Server via SSH
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+        SERVER_USER: ${{ secrets.DIGITALOCEAN_SERVER_USER }}
+        SERVER_IP: ${{ secrets.DIGITALOCEAN_SERVER_IP }}
+      run: |
+        # SSH into the server and run deployment commands
+        ssh -i ~/.ssh/id_rsa $SERVER_USER@$SERVER_IP << 'EOF'
+          cd /var/www/html
+          git pull origin main
+          npm install
+          npm run build --configuration=production --output-path=dist/browser
+        EOF
