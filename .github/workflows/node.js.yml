@@ -27,7 +27,7 @@ jobs:
 
         # SSH into the server and run deployment commands
         ssh -i ~/.ssh/id_africa_relief $SERVER_USER@$SERVER_IP << 'EOF'
-          cd /var/www/html
+          cd /var/www/html/angular-test
           git pull origin main
           npm install
           npx ng build --configuration=production
