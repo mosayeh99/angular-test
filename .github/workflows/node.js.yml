@@ -21,12 +21,12 @@ jobs:
       run: |
         # Set up SSH using the existing key
         mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_africa_relief
+        chmod 600 ~/.ssh/id_africa_relief
         ssh-keyscan -H "$SERVER_IP" >> ~/.ssh/known_hosts
 
         # SSH into the server and run deployment commands
-        ssh -i ~/.ssh/id_rsa $SERVER_USER@$SERVER_IP << 'EOF'
+        ssh -i ~/.ssh/id_africa_relief $SERVER_USER@$SERVER_IP << 'EOF'
           cd /var/www/html/angular-test
           git pull origin main
           npm install
